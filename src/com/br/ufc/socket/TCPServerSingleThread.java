@@ -1,4 +1,4 @@
-package com.br.ufc;
+package com.br.ufc.socket;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.ServerSocket;

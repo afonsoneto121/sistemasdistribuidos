@@ -1,4 +1,4 @@
-package com.br.ufc;
+package com.br.ufc.socket;
 import java.net.*;
 import java.io.*;
 public class UDPClient{
