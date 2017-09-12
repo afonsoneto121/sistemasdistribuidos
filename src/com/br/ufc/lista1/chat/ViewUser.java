@@ -55,10 +55,21 @@ public class ViewUser extends JFrame implements Runnable{
 		btnEnviar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				cliente.enviar(textField.getText().toString());
-				textArea.append("EU: "+ textField.getText() + "\n");
-				textField.setText("");
-
+				String txt = textField.getText().toString();
+				if(txt.split(" ")[0].toUpperCase().equals("CALC")) {
+					try {
+						Double numA = Double.parseDouble(txt.split(" ")[1]);
+						String operacao = txt.split(" ")[2];
+						Double numB = Double.parseDouble(txt.split(" ")[3]);
+						cliente.enviar("CALC " + String.valueOf(numA)+" "+operacao+" "+String.valueOf(numB));
+					} catch (Exception e2) {
+						// TODO: handle exception
+					}
+				}else {
+					cliente.enviar(textField.getText().toString());
+					textArea.append("EU: "+ textField.getText() + "\n");
+				}
+				textField.setText("");				
 			}
 		});
 		btnEnviar.setBounds(445, 350, 115, 34);

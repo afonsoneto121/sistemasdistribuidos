@@ -100,8 +100,13 @@ class OuvirMensagens extends Thread {
 					}
 				}
 				while(true) {
-					msg = inputStream.readUTF();										
-					novoOutputStream.writeUTF(user.getNome()+ ": "+msg);					
+					msg = inputStream.readUTF();
+					if(msg.split(" ")[0].equals("CALC")) {
+						Calculadora calc = new Calculadora();
+						String resultado = calc.calc(msg);
+						outputStream.writeUTF(resultado);
+					}else
+						novoOutputStream.writeUTF(user.getNome()+ ": "+msg);					
 				}
 			} catch (IOException e) {
 				System.err.println("IO: "+ e.getMessage());
@@ -110,4 +115,22 @@ class OuvirMensagens extends Thread {
 		}
 	}
 	
+}
+
+class Calculadora {
+	String calc(String msg) {
+		Double numA = Double.parseDouble(msg.split(" ")[1]);
+		String operacao = msg.split(" ")[2];
+		Double numB = Double.parseDouble(msg.split(" ")[3]);
+		String resultado = null;
+		switch(operacao) {
+			case "+" : resultado = String.valueOf(numA + numB);break;
+			case "-" : resultado = String.valueOf(numA - numB);break; 
+			case "*" : resultado = String.valueOf(numA * numB);break;
+			case "/" : resultado = String.valueOf(numA / numB);break;
+			default :  resultado = "";
+		}
+		return resultado;
+
+	}
 }
