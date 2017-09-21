@@ -102,7 +102,7 @@ class OuvirMensagens extends Thread {
 				while(true) {
 					msg = inputStream.readUTF();
 					if(msg.split(" ")[0].equals("CALC")) {
-						Calculadora calc = new Calculadora();
+						Calculadora calc = Calculadora.getInstance();
 						String resultado = calc.calc(msg);
 						outputStream.writeUTF(resultado);
 					}else
@@ -118,6 +118,16 @@ class OuvirMensagens extends Thread {
 }
 
 class Calculadora {
+	
+	private static Calculadora calc = null;
+	private Calculadora( ) {}
+	public static Calculadora getInstance() {
+		if(calc == null) {
+			calc = new Calculadora();
+			return calc;
+		}
+		return calc;
+	}
 	String calc(String msg) {
 		Double numA = Double.parseDouble(msg.split(" ")[1]);
 		String operacao = msg.split(" ")[2];
